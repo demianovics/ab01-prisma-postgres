@@ -1,20 +1,29 @@
+
+import { faker } from '@faker-js/faker';
+
 import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+    log: ['query', 'info', 'warn', 'error']
+});
 
 async function main() {
-    // const newUser = await prisma.user.create({
-    //     data: {
-    //         name: 'Alice',
-    //         email: 'alice2@example.com',
-    //     },
-    // });
-    // console.log('Neuer Benutzer:', newUser);
-
-    const users = await prisma.user.findMany();
-    console.log(users);
+    const newUser = await prisma.user.create({
+        data: {
+            name: faker.person.firstName(),
+            email: faker.internet.email(),
+        },
+    });
+    console.log('Neuer Benutzer:', newUser);
 }
 
-
+main()
+    .catch((e) => {
+        throw e;
+    })
+    .finally(async () => {
+        console.log("disconnect");
+        await prisma.$disconnect();
+    });
 
 import express from 'express';
 
@@ -26,8 +35,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/users', async (req, res) => {
-    const users = await prisma.user.findMany();
-    res.send(users);
+    try {
+        const users = await prisma.user.findMany();
+        res.json(users);
+      } catch (error: any) {
+        res.status(500).json({ error: error.message });
+      }
 });
 
 app.listen(port, () => {
