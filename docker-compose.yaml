@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  mysql:
+    image: mysql:8.2.0
+    restart: "unless-stopped"
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+  ab01-prisma-postgres:
+    build: .
+    image: ab01-prisma-postgres
+    restart: "unless-stopped"
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    expose:
+      - "3000"
+      - "9229"
+    env_file:
+      - .env.docker
+    depends_on:
+      - mysql
+    command: ./wait-for-mysql.sh
