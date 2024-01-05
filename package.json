@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "nodemon",
-    "run": "ts-node ./src/index.ts"
+    "dev": "nodemon",
+    "debug": "nodemon --config nodemon.debug.json",
+    "tsnode_off": "ts-node --inspect ./src/index.ts",
+    "tsnode_off2": "node --inspect -r ts-node/register ./src/index.ts"
   },
   "keywords": [],
   "author": "",
