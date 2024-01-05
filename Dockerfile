@@ -3,6 +3,7 @@ WORKDIR /app
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install
 COPY ./ ./
+RUN npx prisma generate
 # Kopiere das Skript in den Container
 COPY ./wait-for-mysql.sh ./wait-for-mysql.sh
 # Mache das Skript ausführbar

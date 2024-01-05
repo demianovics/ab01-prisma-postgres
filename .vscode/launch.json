@@ -17,7 +17,7 @@
         {
             "type": "node",
             "request": "attach",
-            "name": "Attach to Docker",
+            "name": "Debug Docker Nodemon",
             "localRoot": "${workspaceFolder}",
             "remoteRoot": "/app",
             "address": "localhost",

@@ -35,6 +35,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/users', async (req, res) => {
+    console.log("GET /users");
     try {
         const users = await prisma.user.findMany();
         res.json(users);
