@@ -8,6 +8,7 @@
     "build": "tsc",
     "dev": "nodemon",
     "debug": "nodemon --config nodemon.debug.json",
+    "postinstall": "npx prisma generate",
     "tsnode_off": "ts-node --inspect ./src/index.ts",
     "tsnode_off2": "node --inspect -r ts-node/register ./src/index.ts"
   },
