@@ -11,10 +11,24 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int          @id @default(autoincrement())
+  name        String
+  email       String       @unique
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  userConfigs UserConfig[] // Relation zu UserConfig
+
+  @@map("users")
 }
 
+model UserConfig {
+  id        Int      @id @default(autoincrement())
+  userId    Int      // Fremdschlüssel, der auf User verweist
+  config    String   // Annahme eines Konfigurationswerts als String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id]) // Relation zurück zu User
+
+  @@map("user_configs")
+}

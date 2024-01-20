@@ -36,6 +36,8 @@ npx prisma migrate dev
 npm run debug
 ```
 
+Keep in mind, that ```npm prisma generate``` will run post install
+
 Now visit http://localhost:3000/users to see the server in action.
 
 ## Docker
