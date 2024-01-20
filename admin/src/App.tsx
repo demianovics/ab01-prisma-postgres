@@ -18,16 +18,20 @@ function App() {
     }
   };
 
-
-  const getUser = async function() {
+  const getUser = async () => {
     const user = await trpc.getUser.query('test');
     console.log(user);
+    // we have type safet here!
+  }
+
+  const getUsers = async () => {
+    const users = await trpc.getUsers.query();
+    console.log(users);
+    // we have type safet here!
   }
 
   useEffect(() => {
     // Ausführen beim Laden der Komponente
-    fetchUsers();
-    
   }, []);
 
   return (
@@ -42,8 +46,23 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => getUser()  }>
+        <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
+        </button>
+        <br />
+        <br />
+        <button onClick={() => fetchUsers() }>
+          fetch("/users")
+        </button>
+        <br />
+        <br />
+        <button onClick={() => getUser() }>
+          tRPC.getUser()
+        </button>
+        <br />
+        <br />
+        <button onClick={() => getUsers() }>
+          tRPC.getUsers()
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR

@@ -1,10 +1,6 @@
 
 import { faker } from '@faker-js/faker';
-
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient({
-    log: ['query', 'info', 'warn', 'error']
-});
+import { prisma } from './prisma';
 
 async function main() {
     const newUser = await prisma.user.create({
