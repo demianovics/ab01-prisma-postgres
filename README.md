@@ -28,7 +28,7 @@ Start up a mysql instance and expose its 3306 port with docker.
 docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -d mysql:8.2.0
 ```
 
-Change into the app directory. And run the following:
+Change into the `/server` directory. And run the following:
 
 ```bash
 npm install
@@ -36,7 +36,7 @@ npx prisma migrate dev
 npm run debug
 ```
 
-Keep in mind, that ```npm prisma generate``` will run post install
+Keep in mind, that ```npm prisma generate``` will run post install, and generate type definitions based on the schema into `node_modules/@prisma/client``
 
 Now visit http://localhost:3000/users to see the server in action.
 
