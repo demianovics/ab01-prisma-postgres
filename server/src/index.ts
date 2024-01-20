@@ -26,8 +26,11 @@ main()
     });
 
 import express from 'express';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
+
 const port = 3000;
 
 app.get('/', (req, res) => {
@@ -73,6 +76,27 @@ app.get('/user_configs', async (req, res) => {
         res.status(500).json({ error: error.message });
       }
 });
+
+
+import { appRouter } from './router';
+import { initTRPC } from '@trpc/server';
+import * as trpcExpress from '@trpc/server/adapters/express';
+
+// created for each request
+const createContext = ({
+    req,
+    res,
+  }: trpcExpress.CreateExpressContextOptions) => ({}); // no context
+  type Context = Awaited<ReturnType<typeof createContext>>;
+  const t = initTRPC.context<Context>().create();
+  
+  app.use(
+    '/trpc',
+    trpcExpress.createExpressMiddleware({
+      router: appRouter,
+      createContext,
+    }),
+  );
 
 app.listen(port, () => {
   console.log(`Server läuft auf http://localhost:${port}`);

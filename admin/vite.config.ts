@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/users': 'http://localhost:3000'
+      '/users': 'http://localhost:3000',
+      '/trpc': 'http://localhost:3000'
     }
   }
 })

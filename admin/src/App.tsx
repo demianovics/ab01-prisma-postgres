@@ -3,6 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import { trpc } from './trpc';
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -16,9 +18,16 @@ function App() {
     }
   };
 
+
+  const getUser = async function() {
+    const user = await trpc.getUser.query('test');
+    console.log(user);
+  }
+
   useEffect(() => {
     // Ausführen beim Laden der Komponente
     fetchUsers();
+    
   }, []);
 
   return (
@@ -33,7 +42,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button onClick={() => getUser()  }>
           count is {count}
         </button>
         <p>
