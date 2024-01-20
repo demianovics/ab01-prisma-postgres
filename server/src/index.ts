@@ -46,7 +46,7 @@ app.get('/users', async (req, res) => {
             include: {
                 userConfigs: true
             },
-            // take: 1
+            take: 1
         });
         const user = users[0];
         const userConfig = users[0].userConfigs[0]
