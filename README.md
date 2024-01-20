@@ -1,51 +1,59 @@
 # ab01-prisma-postgres
-## Node.js + TypeScript + Express + Prisma (Mysql/Postgres)
 
 This setup combines the following:
 
-- Node.js v20.10.0 (in Docker)
+- Node.js v20.10.0
 - TypeScript
 - Express
 - Prisma
 - MySQL
-- Debuggable
-- development locally (with nodemon)
-- development with docker (with nodemon)
+- tRPC
+- Vite & React
 
-There are two ways to setup up this project:
+It consists of two projects. A tRPC-Server under /server and a frontend-GUI under /admin.
 
-## Locally
 
-### Prerequisites
-- docker
-- node.js v20.10.0
-- mysql 8.2.0 (via Docker)
+## Prerequisites
+- Docker installed
+- Mode.js v20.10.0 installed
+- Mysql 8.2.0 running (via Docker)
 
-You need to have you database up an running. And copy the .env.dist file to .env and adjust the DATABASE_URL value according to your database and its credentials. `npx prisma migrate dev` will take care of creating not only the database but also the tables.
+You need to have you database up an running. Start up a mysql instance and expose its 3306 port with Docker.
 
-Start up a mysql instance and expose its 3306 port with docker.
 ```bash
 docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -d mysql:8.2.0
 ```
 
-Change into the `/server` directory. And run the following:
+## Run the Server
+
+Change into the `/server` directory.
+
+Copy the .env.dist file to .env and adjust the DATABASE_URL value according to your database and its credentials.
+
+And run the following:
 
 ```bash
 npm install
+npx prisma generate
 npx prisma migrate dev
 npm run debug
 ```
 
-Keep in mind, that ```npm prisma generate``` will run post install, and generate type definitions based on the schema into `node_modules/@prisma/client``
+Keep in mind, that ```npm prisma generate``` will also run post install, and generate type definitions based on the schema into `node_modules/@prisma/client`
 
-Now visit http://localhost:3000/users to see the server in action.
+Now visit http://localhost:3000/users and http://localhost:3000/trpc to see the server in action.
 
-## Docker
+## Run the Frontend
 
-When running the `docker-compose.yaml` both the app and the mysql server are started as containers. You don't need Node.js locally.
+Change into the `/admin` directory.
+
+Copy the .env.dist file to .env without altering its contents.
+
+And run the following:
 
 ```bash
-docker-compose up
+npm install
+npm run dev
 ```
 
-Now visit http://localhost:3000/users to see the server in action.
+Now visit http://localhost:5173/ to see the frontend in action, communication with the backend 
