@@ -5,6 +5,28 @@ import './App.css'
 
 import { trpc } from './trpc';
 
+import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+
+const rows: GridRowsProp = [
+  { id: 1, col1: 'Hello', col2: 'World' },
+  { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
+  { id: 3, col1: 'MUI', col2: 'is Amazing' },
+];
+
+const columns: GridColDef[] = [
+  { field: 'col1', headerName: 'Column 1', width: 150, editable: true },
+  { field: 'col2', headerName: 'Column 2', width: 150 },
+];
+
+function Grid() {
+  return (
+    <div style={{ height: 300, width: '100%' }}>
+      <DataGrid rows={rows} columns={columns} />
+    </div>
+  );
+}
+
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -28,6 +50,12 @@ function App() {
     const users = await trpc.getUsers.query();
     console.log(users);
     // we have type safet here!
+
+    users[0].userConfigs.forEach((uc) => {
+      console.log(uc)
+      console.log(typeof uc)
+    });
+
   }
 
   useEffect(() => {
@@ -71,6 +99,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <Grid />
     </>
   )
 }
